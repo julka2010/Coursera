@@ -1,0 +1,19 @@
+function [h, Z3, A2, Z2, A1] = hypothesis(nn_params, ...
+                          input_layer_size, ...
+                          hidden_layer_size, ...
+                          num_labels, ...
+                          X)
+
+Theta1 = reshape(nn_params(1:hidden_layer_size * (input_layer_size + 1)), ...
+                 hidden_layer_size, (input_layer_size + 1));
+
+Theta2 = reshape(nn_params((1 + (hidden_layer_size * (input_layer_size + 1))):end), ...
+                 num_labels, (hidden_layer_size + 1));
+
+A1 = [ones(size(X,1), 1), X];
+Z2 = A1*Theta1';
+A2 = [ones(size(X,1), 1), sigmoid(Z2)];
+Z3 = A2*Theta2';
+h = sigmoid(Z3);
+
+end
